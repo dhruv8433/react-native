@@ -8,6 +8,15 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { addTodo } from '@/hooks/action';
 
+type Todo = {
+  id: string;
+  text: string;
+  description: string;
+  tags: string[];
+  date: string;
+  completed: boolean;
+};
+
 const TabTwoScreen = () => {
   const [newTodoText, setNewTodoText] = useState<string>('');
   const [newTodoDescription, setNewTodoDescription] = useState<string>('');
@@ -96,12 +105,15 @@ const styles = StyleSheet.create({
   },
   formContainer: {
     flex: 1,
+    padding: 20
   },
   title: {
     fontSize: 28,
     fontWeight: 'bold',
     marginBottom: 16,
     paddingTop: 40,
+    paddingLeft: 10,
+    paddingBottom: 10,
   },
   input: {
     marginBottom: 10,
