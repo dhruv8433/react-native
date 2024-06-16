@@ -1,7 +1,7 @@
 // TabTwoScreen.tsx
 import React, { useState } from 'react';
-import { StyleSheet, View, Platform } from 'react-native';
-import { TextInput, Button } from 'react-native-paper';
+import { StyleSheet, View, Platform, Image } from 'react-native';
+import { TextInput, Button, Divider } from 'react-native-paper';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { useDispatch } from 'react-redux';
 import { ThemedText } from '@/components/ThemedText';
@@ -56,9 +56,25 @@ const TabTwoScreen = () => {
 
   return (
     <ThemedView style={styles.container}>
-      <View style={styles.formContainer}>
+      <ThemedView style={styles.header}>
+        <Image source={{ uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSv8a2YftkCyxt7LPQ2I-tc5tQgydVpHWsFPA&s" }} style={styles.logo} />
         <ThemedText type="title" style={styles.title}>Add Todo</ThemedText>
+      </ThemedView>
 
+      {/* Beautiful image of todos */}
+      <View style={styles.imageContainer}>
+        <Image source={{ uri: 'https://i.pinimg.com/564x/15/3a/06/153a0665b1a65e59cef51bb81b0ee662.jpg' }} style={styles.todosImage} />
+      </View>
+
+      <ThemedText style={styles.description}>
+        Add your todos by simply filling out the form below. You can also add tags to categorize your todos.
+      </ThemedText>
+
+      <View style={{ paddingHorizontal: 20 }}>
+        <Divider style={{ borderColor: "#000" }} />
+      </View>
+
+      <View style={styles.formContainer}>
         <TextInput
           label="Todo Text"
           value={newTodoText}
@@ -104,23 +120,48 @@ const styles = StyleSheet.create({
     paddingTop: Platform.OS === 'android' ? 25 : 0,
     paddingHorizontal: 16,
   },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    paddingTop: 40,
+    paddingHorizontal: 16,
+  },
   formContainer: {
     flex: 1,
     padding: 20
   },
+  logo: {
+    width: 30,
+    height: 30,
+  },
   title: {
     fontSize: 28,
     fontWeight: 'bold',
-    marginBottom: 16,
-    paddingTop: 40,
-    paddingLeft: 10,
-    paddingBottom: 10,
+  },
+  imageContainer: {
+    alignItems: 'center',
+    marginTop: 20,
+    paddingHorizontal: 15
+  },
+  todosImage: {
+    width: '100%',
+    height: 200,
+    resizeMode: 'cover',
+    borderRadius: 10,
   },
   input: {
     marginBottom: 10,
   },
   button: {
     marginTop: 10,
+  },
+  description: {
+    fontSize: 16,
+    marginTop: 20,
+    marginBottom: 20,
+    textAlign: 'center',
+    paddingHorizontal: 16,
   },
 });
 

@@ -3,7 +3,8 @@ import { ThemedView } from "@/components/ThemedView";
 import TodoItem from "@/components/TodoItem";
 import { RootState } from "@/hooks/types";
 import { useState } from "react";
-import { FlatList, Platform, StyleSheet, View } from "react-native";
+import { FlatList, Image, Platform, StyleSheet, View } from "react-native";
+import { Divider } from "react-native-paper";
 import { useSelector } from "react-redux";
 
 export default function Completed() {
@@ -19,8 +20,27 @@ export default function Completed() {
     console.log("completed", completedTodos)
     return (
         <ThemedView style={styles.container}>
+            <ThemedView style={styles.header}>
+                <Image source={{ uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSv8a2YftkCyxt7LPQ2I-tc5tQgydVpHWsFPA&s" }} style={styles.logo} />
+                <ThemedText type="title" style={styles.title}>
+                    Completed
+                </ThemedText>
+            </ThemedView>
+
+            {/* Beautiful image of todos */}
+            <View style={styles.imageContainer}>
+                <Image source={{ uri: 'https://i.pinimg.com/564x/ee/2d/b4/ee2db4e6b1b3ca277bc96f2e1b20367a.jpg' }} style={styles.todosImage} />
+            </View>
+
+            <ThemedText style={styles.description}>
+                Your completed tasks are listed below. Keep up the good work! 🚀
+            </ThemedText>
+
+            <View style={{ paddingHorizontal: 20 }}>
+                <Divider style={{ borderColor: "#000" }} />
+            </View>
+
             <View style={styles.formContainer}>
-                <ThemedText type="title" style={styles.title}>Completed</ThemedText>
                 <ThemedView style={styles.todoListContainer}>
                     <FlatList
                         data={completedTodos}
@@ -30,7 +50,6 @@ export default function Completed() {
                                 item={item}
                                 expanded={expandedTodo === item.id}
                                 onPress={() => handlePress(item.id)}
-                                onMarkAsCompleted={() => ""}
                                 isCompleted={true}
                             />
                         )}
@@ -50,13 +69,6 @@ const styles = StyleSheet.create({
     formContainer: {
         flex: 1,
     },
-    title: {
-        fontSize: 28,
-        fontWeight: 'bold',
-        marginBottom: 16,
-        paddingTop: 40,
-        paddingLeft: 20,
-    },
     input: {
         marginBottom: 10,
     },
@@ -67,5 +79,38 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingHorizontal: 16,
         paddingTop: 20,
+    },
+    header: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 8,
+        paddingTop: 40,
+        paddingHorizontal: 16,
+    },
+    logo: {
+        width: 30,
+        height: 30,
+    },
+    title: {
+        fontSize: 28,
+        fontWeight: 'bold',
+    },
+    imageContainer: {
+        alignItems: 'center',
+        marginTop: 20,
+        paddingHorizontal: 15
+    },
+    todosImage: {
+        width: '100%',
+        height: 200,
+        resizeMode: 'cover',
+        borderRadius: 10,
+    },
+    description: {
+        fontSize: 16,
+        marginTop: 20,
+        marginBottom: 20,
+        textAlign: 'center',
+        paddingHorizontal: 16,
     },
 });
