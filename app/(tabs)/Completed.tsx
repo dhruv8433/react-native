@@ -14,7 +14,6 @@ export default function Completed() {
         setExpandedTodo(expandedTodo === id ? null : id);
     };
 
-
     const completedTodos = useSelector((state: RootState) => state.todos.completedTodos);
 
     console.log("completed", completedTodos)

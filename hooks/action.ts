@@ -1,12 +1,17 @@
 // actions.ts
-import { ADD_TODO, MARK_AS_COMPLETED, Todo, TodoAction } from './types';
+import { ADD_TODO, DELETE_TODO, MARK_AS_COMPLETED, Todo, TodoAction } from './types';
 
 export const addTodo = (todo: Todo): TodoAction => ({
   type: ADD_TODO,
   payload: todo,
 });
 
-export const markAsCompleted = (todo: Todo): TodoAction => ({
+export const markAsCompleted = (id: string): TodoAction => ({
   type: MARK_AS_COMPLETED,
-  payload: todo,
+  payload: id,
+});
+
+export const deleteTodo = (id: string) => ({
+  type: DELETE_TODO,
+  payload: id,
 });

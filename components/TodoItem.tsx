@@ -1,53 +1,63 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-
-export type Todo = {
-  id: string;
-  text: string;
-  description: string;
-  tags: string[];
-  date: string;
-  completed: boolean;
-};
+import { useDispatch } from 'react-redux';
+import { markAsCompleted, deleteTodo } from '@/hooks/action';
+import { Todo } from '@/hooks/types';
 
 type TodoItemProps = {
-  item: Todo | undefined; // Ensure item is properly typed to handle undefined
+  item: Todo;
   expanded: boolean;
   onPress: () => void;
-  onMarkAsCompleted: () => void;
   isCompleted: boolean;
 };
 
 const colors: string[] = ['#FFCDD2', '#E1BEE7', '#C5CAE9', '#B3E5FC', '#C8E6C9', '#FFF9C4', '#FFE0B2', '#D7CCC8'];
 
-const TodoItem: React.FC<TodoItemProps> = ({ item, expanded, onPress, onMarkAsCompleted, isCompleted }) => {
-  const handlePress = () => {
-    onPress();
+const TodoItem: React.FC<TodoItemProps> = ({ item, expanded, onPress, isCompleted }) => {
+  const dispatch = useDispatch();
+
+  const handleMoveToCompleted = () => {
+    console.log('Move to completed:', item.id);
+    dispatch(markAsCompleted(item.id));
+    if (!isCompleted) {
+      dispatch(deleteTodo(item.id)); 
+    }
   };
 
-  // Check if item is undefined or null
+  const handleDelete = () => {
+    console.log('Delete todo:', item.id);
+    dispatch(deleteTodo(item.id.toString())); // Ensure id is converted to string
+  };
+
   if (!item) {
-    return null; // Or render a placeholder or empty view based on your UI requirements
+    return null;
   }
 
+  const { text, description, date } = item;
+
   return (
-    <TouchableOpacity onPress={handlePress}>
+    <TouchableOpacity onPress={onPress}>
       <View style={[styles.todoItem, { backgroundColor: colors[Math.floor(Math.random() * colors.length)] }]}>
         <View style={{ flex: 1 }}>
-          <Text style={styles.todoText}>{item.text}</Text>
+          <Text style={styles.todoText}>{text}</Text>
           {expanded && (
             <>
-              <Text style={styles.todoDescription}>{item.description}</Text>
-              <Text style={styles.todoDescription}>Date : {item.date}</Text>
+              <Text style={styles.todoDescription}>{description}</Text>
+              <Text style={styles.todoDescription}>Date: {date}</Text>
             </>
           )}
         </View>
-        {!isCompleted && (
-          <TouchableOpacity onPress={() => onMarkAsCompleted()} style={styles.completedIcon}>
-            <MaterialIcons name="done" size={24} color="white" />
+        <View style={styles.iconContainer}>
+          {!isCompleted && (
+            <TouchableOpacity onPress={handleMoveToCompleted} style={styles.completedIcon}>
+              <MaterialIcons name="done" size={24} color="white" />
+            </TouchableOpacity>
+          )}
+          <TouchableOpacity onPress={handleDelete} style={styles.deleteIcon}>
+            <MaterialIcons name="delete" size={24} color="white" />
           </TouchableOpacity>
-        )}
+        </View>
       </View>
     </TouchableOpacity>
   );
@@ -75,9 +85,19 @@ const styles = StyleSheet.create({
     color: '#555',
     marginTop: 8,
   },
+  iconContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   completedIcon: {
     marginLeft: 16,
     backgroundColor: 'green',
+    padding: 10,
+    borderRadius: 10,
+  },
+  deleteIcon: {
+    marginLeft: 16,
+    backgroundColor: 'red',
     padding: 10,
     borderRadius: 10,
   },
