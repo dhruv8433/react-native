@@ -6,7 +6,7 @@ export const addTodo = (todo: Todo): TodoAction => ({
   payload: todo,
 });
 
-export const markAsCompleted = (id: string) => ({
-    type: MARK_AS_COMPLETED,
-    payload: id,
-  });
+export const markAsCompleted = (todo: Todo): TodoAction => ({
+  type: MARK_AS_COMPLETED,
+  payload: todo,
+});

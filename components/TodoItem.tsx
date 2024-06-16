@@ -1,16 +1,8 @@
-// TodoItem.tsx
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 
-type TodoItemProps = {
-  item: Todo;
-  expanded: boolean;
-  onPress: () => void;
-  onMarkAsCompleted: () => void;
-};
-
-type Todo = {
+export type Todo = {
   id: string;
   text: string;
   description: string;
@@ -19,32 +11,43 @@ type Todo = {
   completed: boolean;
 };
 
+type TodoItemProps = {
+  item: Todo | undefined; // Ensure item is properly typed to handle undefined
+  expanded: boolean;
+  onPress: () => void;
+  onMarkAsCompleted: () => void;
+  isCompleted: boolean;
+};
+
 const colors: string[] = ['#FFCDD2', '#E1BEE7', '#C5CAE9', '#B3E5FC', '#C8E6C9', '#FFF9C4', '#FFE0B2', '#D7CCC8'];
 
-const TodoItem: React.FC<TodoItemProps> = ({ item, expanded, onPress, onMarkAsCompleted }) => {
+const TodoItem: React.FC<TodoItemProps> = ({ item, expanded, onPress, onMarkAsCompleted, isCompleted }) => {
   const handlePress = () => {
     onPress();
   };
 
-  const handleMarkAsCompleted = () => {
-    onMarkAsCompleted();
-  };
+  // Check if item is undefined or null
+  if (!item) {
+    return null; // Or render a placeholder or empty view based on your UI requirements
+  }
 
   return (
-    <TouchableOpacity onPress={handlePress} style={{ display: "flex" }}>
+    <TouchableOpacity onPress={handlePress}>
       <View style={[styles.todoItem, { backgroundColor: colors[Math.floor(Math.random() * colors.length)] }]}>
         <View style={{ flex: 1 }}>
           <Text style={styles.todoText}>{item.text}</Text>
-          {expanded &&
+          {expanded && (
             <>
               <Text style={styles.todoDescription}>{item.description}</Text>
               <Text style={styles.todoDescription}>Date : {item.date}</Text>
             </>
-          }
+          )}
         </View>
-        <TouchableOpacity onPress={handleMarkAsCompleted} style={styles.completedIcon}>
-          <MaterialIcons name="done" size={24} color="white" />
-        </TouchableOpacity>
+        {!isCompleted && (
+          <TouchableOpacity onPress={() => onMarkAsCompleted()} style={styles.completedIcon}>
+            <MaterialIcons name="done" size={24} color="white" />
+          </TouchableOpacity>
+        )}
       </View>
     </TouchableOpacity>
   );
@@ -74,10 +77,9 @@ const styles = StyleSheet.create({
   },
   completedIcon: {
     marginLeft: 16,
-    backgroundColor: "green",
-    color: "white",
+    backgroundColor: 'green',
     padding: 10,
-    borderRadius: 10
+    borderRadius: 10,
   },
 });
 

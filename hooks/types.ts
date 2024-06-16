@@ -22,9 +22,6 @@ export interface MarkAsCompletedAction {
   
   export type TodoAction = AddTodoAction | MarkAsCompletedAction;
 
-  // types.ts
-
-
 export type RootState = {
   todos: {
     todos: Todo[]; // Assuming this is how your todos are structured in Redux state
