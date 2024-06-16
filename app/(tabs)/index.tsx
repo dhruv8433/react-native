@@ -1,11 +1,10 @@
 // HomeScreen.tsx
-
 import React, { useState, useEffect } from 'react';
-import { Image, StyleSheet, Platform, FlatList, TouchableOpacity } from 'react-native';
+import { Image, StyleSheet, Platform, FlatList } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { useSelector, useDispatch } from 'react-redux';
-import TodoItem from './TodoItem'; // Import your new component
+import TodoItem, { Todo } from '../../components/TodoItem'; // Import your new component
 import { markAsCompleted } from '@/hooks/action';
 import { RootState } from '@/hooks/types';
 
@@ -19,12 +18,8 @@ export default function HomeScreen() {
     setExpandedTodo(expandedTodo === id ? null : id);
   };
 
-  const handleMarkAsCompleted = (id: string) => {
-    dispatch(markAsCompleted(id));
-  };
-
-  const handleMoveToCompleted = (id: string) => {
-    dispatch(markAsCompleted(id));
+  const handleMoveToCompleted = (item: Todo) => {
+    dispatch(markAsCompleted(item));
   };
 
   useEffect(() => {
@@ -49,7 +44,8 @@ export default function HomeScreen() {
               item={item}
               expanded={expandedTodo === item.id}
               onPress={() => handlePress(item.id)}
-              onMarkAsCompleted={() => handleMoveToCompleted(item.id)}
+              onMarkAsCompleted={() => handleMoveToCompleted(item)}
+              isCompleted={false}
             />
           )}
         />
