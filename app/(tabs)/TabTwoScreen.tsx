@@ -40,6 +40,7 @@ const TabTwoScreen = () => {
       description: newTodoDescription,
       tags: selectedTags,
       date: String(Date.now()),
+      completed: Boolean(false),
     };
 
     // Dispatch action to add todo to Redux store

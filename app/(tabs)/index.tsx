@@ -1,25 +1,21 @@
 // HomeScreen.tsx
 import React, { useState, useEffect } from 'react';
-import { Image, StyleSheet, Platform, FlatList } from 'react-native';
+import { Image, StyleSheet, Platform, FlatList, View } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { useSelector, useDispatch } from 'react-redux';
-import TodoItem, { Todo } from '../../components/TodoItem'; // Import your new component
-import { markAsCompleted } from '@/hooks/action';
+import TodoItem from '../../components/TodoItem'; // Import your new component
 import { RootState } from '@/hooks/types';
+import { Button, Divider, Text } from 'react-native-paper';
 
 export default function HomeScreen() {
   const [expandedTodo, setExpandedTodo] = useState<string | null>(null);
   const dispatch = useDispatch();
-  const todos = useSelector((state: RootState) => state.todos.todos);
-  const completedTodos = useSelector((state: RootState) => state.todos.completedTodos);
+  const todos = useSelector((state: RootState) => state.todos.todos || []);
+  const completedTodos = useSelector((state: RootState) => state.todos.completedTodos || []);
 
   const handlePress = (id: string) => {
     setExpandedTodo(expandedTodo === id ? null : id);
-  };
-
-  const handleMoveToCompleted = (item: Todo) => {
-    dispatch(markAsCompleted(item));
   };
 
   useEffect(() => {
@@ -30,11 +26,25 @@ export default function HomeScreen() {
   return (
     <ThemedView style={styles.container}>
       <ThemedView style={styles.header}>
-        <Image source={require('@/assets/images/react-logo.png')} style={styles.logo} />
+        <Image source={{ uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSv8a2YftkCyxt7LPQ2I-tc5tQgydVpHWsFPA&s" }} style={styles.logo} />
         <ThemedText type="title" style={styles.title}>
           My Todos
         </ThemedText>
       </ThemedView>
+
+      {/* Beautiful image of todos */}
+      <View style={styles.imageContainer}>
+        <Image source={{ uri: 'https://i.pinimg.com/564x/a7/5f/02/a75f028d910bd6fd07926b011c8dc5b1.jpg' }} style={styles.todosImage} />
+      </View>
+
+      <ThemedText style={styles.description}>
+        Welcome to My Todos app! This app helps you keep track of your tasks and organize your day efficiently.
+      </ThemedText>
+
+      <View style={{ paddingHorizontal: 20 }}>
+        <Divider style={{ borderColor: "#000" }} />
+      </View>
+
       <ThemedView style={styles.todoListContainer}>
         <FlatList
           data={todos}
@@ -44,7 +54,6 @@ export default function HomeScreen() {
               item={item}
               expanded={expandedTodo === item.id}
               onPress={() => handlePress(item.id)}
-              onMarkAsCompleted={() => handleMoveToCompleted(item)}
               isCompleted={false}
             />
           )}
@@ -68,16 +77,34 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   logo: {
-    width: 50,
-    height: 50,
+    width: 30,
+    height: 30,
   },
   title: {
     fontSize: 28,
     fontWeight: 'bold',
   },
+  imageContainer: {
+    alignItems: 'center',
+    marginTop: 20,
+    paddingHorizontal: 15
+  },
+  todosImage: {
+    width: '100%',
+    height: 200,
+    resizeMode: 'cover',
+    borderRadius: 10,
+  },
   todoListContainer: {
     flex: 1,
     paddingHorizontal: 16,
     paddingTop: 20,
+  },
+  description: {
+    fontSize: 16,
+    marginTop: 20,
+    marginBottom: 20,
+    textAlign: 'center',
+    paddingHorizontal: 16,
   },
 });
