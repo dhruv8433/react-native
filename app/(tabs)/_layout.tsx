@@ -18,6 +18,7 @@ export default function TabLayout() {
       <PersistGate loading={null} persistor={persistor}>
         <Tabs
           screenOptions={{
+            tabBarShowLabel: true,
             tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
             headerShown: false,
           }}>
@@ -38,6 +39,15 @@ export default function TabLayout() {
                 <TabBarIcon name={focused ? 'add-outline' : 'add-outline'} color={color} />
               ),
             }}
+          />
+          <Tabs.Screen
+            name="Completed"
+            options={{
+              title: 'Completed',
+              tabBarIcon: ({ color, focused }) => (
+                <TabBarIcon name={focused ? 'checkmark-done-outline' : 'checkmark-done-sharp'} color={color} />
+              ),
+              }}
           />
         </Tabs>
       </PersistGate>
