@@ -1,70 +1,87 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+// HomeScreen.tsx
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
+import React, { useState, useEffect } from 'react';
+import { Image, StyleSheet, Platform, FlatList, TouchableOpacity } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { useSelector, useDispatch } from 'react-redux';
+import TodoItem from './TodoItem'; // Import your new component
+import { markAsCompleted } from '@/hooks/action';
+import { RootState } from '@/hooks/types';
 
 export default function HomeScreen() {
+  const [expandedTodo, setExpandedTodo] = useState<string | null>(null);
+  const dispatch = useDispatch();
+  const todos = useSelector((state: RootState) => state.todos.todos);
+  const completedTodos = useSelector((state: RootState) => state.todos.completedTodos);
+
+  const handlePress = (id: string) => {
+    setExpandedTodo(expandedTodo === id ? null : id);
+  };
+
+  const handleMarkAsCompleted = (id: string) => {
+    dispatch(markAsCompleted(id));
+  };
+
+  const handleMoveToCompleted = (id: string) => {
+    dispatch(markAsCompleted(id));
+  };
+
+  useEffect(() => {
+    console.log('Current todos:', todos);
+    console.log('Completed todos:', completedTodos);
+  }, [todos, completedTodos]);
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
+    <ThemedView style={styles.container}>
+      <ThemedView style={styles.header}>
+        <Image source={require('@/assets/images/react-logo.png')} style={styles.logo} />
+        <ThemedText type="title" style={styles.title}>
+          My Todos
+        </ThemedText>
+      </ThemedView>
+      <ThemedView style={styles.todoListContainer}>
+        <FlatList
+          data={todos}
+          keyExtractor={item => item.id}
+          renderItem={({ item }) => (
+            <TodoItem
+              item={item}
+              expanded={expandedTodo === item.id}
+              onPress={() => handlePress(item.id)}
+              onMarkAsCompleted={() => handleMoveToCompleted(item.id)}
+            />
+          )}
         />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
       </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({ ios: 'cmd + d', android: 'cmd + m' })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    </ThemedView>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
+  container: {
+    flex: 1,
+    paddingTop: Platform.OS === 'android' ? 25 : 0,
+    paddingHorizontal: 16,
+  },
+  header: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
+    paddingTop: 40,
+    paddingHorizontal: 16,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  logo: {
+    width: 50,
+    height: 50,
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  title: {
+    fontSize: 28,
+    fontWeight: 'bold',
+  },
+  todoListContainer: {
+    flex: 1,
+    paddingHorizontal: 16,
+    paddingTop: 20,
   },
 });
