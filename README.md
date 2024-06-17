@@ -1,50 +1,61 @@
-# Welcome to your Expo app 👋
+# My Todo App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Welcome to My Todo App! This is a simple web application where you can manage your daily tasks effectively. The app allows you to add new todos, mark them as completed, and delete them when you're done. It's designed to be straightforward and easy to use.
 
-## Get started
+## Features
 
-1. Install dependencies
+- **Add Todo**: Easily add new tasks to your list.
+- **Mark as Completed**: Check off todos as you finish them.
+- **Delete Todo**: Remove tasks you no longer need.
+- **Responsive Design**: Works seamlessly on desktop and mobile.
 
+## Technologies Used
+
+- Frontend: React Native, TypeScript
+
+## Getting Started
+
+To run this application locally, follow these steps:
+
+1. **Clone the repository:**
+
+   ```bash
+   git clone https://github.com/yourusername/todo-app.git
+   cd todo-app
+
+2. Install dependencies:
    ```bash
    npm install
-   ```
 
-2. Start the app
-
+3. Run the application:
    ```bash
-    npx expo start
-   ```
+   npm start
 
-In the output, you'll find options to open the app in a
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## How to Use
+- Add a Todo: Enter a task in the input field and press Enter or click the "Add" button.
+- Mark as Completed: Click on the checkbox next to a todo to mark it as completed.
+- Delete a Todo: Click on the delete icon (trash bin) to remove a todo from the list.
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## screenshorts and demo
 
-## Get a fresh project
+https://github.com/dhruv8433/Prasunet_AD_02/assets/114583978/db530622-2f0f-4cad-bce3-829cfb10dc77
 
-When you're ready, run:
+1. Home Screen
 
-```bash
-npm run reset-project
-```
+![image](https://github.com/dhruv8433/Prasunet_AD_02/assets/114583978/91cb1853-40cb-4f50-ba1d-27e1f06598f6)
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+2. Add todo
 
-## Learn more
+![image](https://github.com/dhruv8433/Prasunet_AD_02/assets/114583978/4fb16da1-a68a-40a1-ae95-df3a2ad2f687)
 
-To learn more about developing your project with Expo, look at the following resources:
+3. completed
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+![image](https://github.com/dhruv8433/Prasunet_AD_02/assets/114583978/90b283eb-a6aa-41ad-b949-a50c3c381bab)
 
-## Join the community
+4. Detailed todo with description
 
-Join our community of developers creating universal apps.
+![image](https://github.com/dhruv8433/Prasunet_AD_02/assets/114583978/b7989ad6-5509-4beb-a8ab-1d1c926f0a91)
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+
+
