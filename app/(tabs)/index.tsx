@@ -3,27 +3,29 @@ import React, { useState, useEffect } from 'react';
 import { Image, StyleSheet, Platform, FlatList, View } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import TodoItem from '../../components/TodoItem'; // Import your new component
 import { RootState } from '@/hooks/types';
-import { Button, Divider, Text } from 'react-native-paper';
-import { clearStorage } from '../store';
+import { Divider } from 'react-native-paper';
 
 export default function HomeScreen() {
   const [expandedTodo, setExpandedTodo] = useState<string | null>(null);
-  const dispatch = useDispatch();
-  const todos = useSelector((state: RootState) => state.todos.todos || []);
-  const completedTodos = useSelector((state: RootState) => state.todos.completedTodos || []);
+  
+  // Detailed logging
+  const todos = useSelector((state: RootState) => {
+    console.log("useSelector state:", state);
+    return state.todos;
+
+  });
+
+  // Logging after extraction
+  useEffect(() => {
+    console.log("Extracted todos:", todos);
+  }, [todos]);
 
   const handlePress = (id: string) => {
     setExpandedTodo(expandedTodo === id ? null : id);
   };
-
-  useEffect(() => {
-    console.log('Current todos:', todos);
-    console.log('Completed todos:', completedTodos);
-    
-  }, [todos, completedTodos]);
 
   return (
     <ThemedView style={styles.container}>
@@ -89,7 +91,7 @@ const styles = StyleSheet.create({
   imageContainer: {
     alignItems: 'center',
     marginTop: 20,
-    paddingHorizontal: 15
+    paddingHorizontal: 15,
   },
   todosImage: {
     width: '100%',

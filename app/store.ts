@@ -1,15 +1,24 @@
-import { createStore, applyMiddleware } from 'redux';
-import persistedReducer from './persistConfig';
-import { persistStore } from 'redux-persist';
+// store.js
+import { configureStore } from '@reduxjs/toolkit';
+import { persistStore, persistReducer } from 'redux-persist';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import todoReducer from '@/hooks/reducer';
 
-const store = createStore(persistedReducer);
+const persistConfig = {
+  key: 'root',
+  storage: AsyncStorage,
+};
+
+const persistedReducer = persistReducer(persistConfig, todoReducer);
+
+const store = configureStore({
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
+});
+
 const persistor = persistStore(store);
 
-export default store;
-
-
-export const clearStorage = () => {
-    persistor.purge().then(() => {
-        console.log('Purged persisted state');
-    });
-};
+export { store, persistor };

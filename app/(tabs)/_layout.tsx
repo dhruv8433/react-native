@@ -1,17 +1,17 @@
-import { Tabs } from 'expo-router';
+// TabLayout.js
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
+import { Tabs } from 'expo-router';
 import { TabBarIcon } from '@/components/navigation/TabBarIcon';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { useSelector, useDispatch } from 'react-redux';
 import { Provider } from 'react-redux';
-import persistStore from 'redux-persist/es/persistStore';
-import store from '../store';
 import { PersistGate } from 'redux-persist/integration/react';
+import { store, persistor } from '../store'; // Ensure correct path
 
-export default function TabLayout() {
+const TabLayout = () => {
   const colorScheme = useColorScheme();
-  const persistor = persistStore(store);
 
   return (
     <Provider store={store}>
@@ -22,7 +22,7 @@ export default function TabLayout() {
             tabBarActiveTintColor: '#000',
             tabBarInactiveTintColor: Colors[colorScheme ?? 'light'].tabIconDefault,
             tabBarStyle: {
-              backgroundColor: '#E6E6FA', // Light purple background
+              backgroundColor: '#E6E6FA',
               borderTopWidth: 0,
               shadowOpacity: 0.1,
               shadowRadius: 10,
@@ -65,7 +65,7 @@ export default function TabLayout() {
       </PersistGate>
     </Provider>
   );
-}
+};
 
 const styles = StyleSheet.create({
   addButtonContainer: {
@@ -90,3 +90,5 @@ const styles = StyleSheet.create({
     backgroundColor: 'purple'
   },
 });
+
+export default TabLayout;
