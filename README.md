@@ -11,9 +11,7 @@ Welcome to My Todo App! This is a simple web application where you can manage yo
 
 ## Technologies Used
 
-- Frontend: HTML, CSS, JavaScript
-- Backend: Node.js, Express
-- Database: MongoDB (or your preferred database)
+- Frontend: React Native, TypeScript
 
 ## Getting Started
 
