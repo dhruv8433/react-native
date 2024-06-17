@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import TodoItem from '../../components/TodoItem'; // Import your new component
 import { RootState } from '@/hooks/types';
 import { Button, Divider, Text } from 'react-native-paper';
+import { clearStorage } from '../store';
 
 export default function HomeScreen() {
   const [expandedTodo, setExpandedTodo] = useState<string | null>(null);
@@ -21,6 +22,7 @@ export default function HomeScreen() {
   useEffect(() => {
     console.log('Current todos:', todos);
     console.log('Completed todos:', completedTodos);
+    
   }, [todos, completedTodos]);
 
   return (

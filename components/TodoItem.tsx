@@ -21,7 +21,7 @@ const TodoItem: React.FC<TodoItemProps> = ({ item, expanded, onPress, isComplete
     console.log('Move to completed:', item.id);
     dispatch(markAsCompleted(item.id));
     if (!isCompleted) {
-      dispatch(deleteTodo(item.id));
+      dispatch(deleteTodo(item.id)); 
     }
   };
 
@@ -38,7 +38,7 @@ const TodoItem: React.FC<TodoItemProps> = ({ item, expanded, onPress, isComplete
 
   return (
     <TouchableOpacity onPress={onPress}>
-      <View style={[styles.todoItem, { backgroundColor: colors[Math.floor(Math.random() * colors.length)] }]}>
+      <View style={[styles.todoItem, { backgroundColor: colors[Math.floor(Math.random() * colors.length)], borderLeftWidth: 4 }]}>
         <View style={{ flex: 1 }}>
           <Text style={styles.todoText}>{text}</Text>
           {expanded && (
@@ -54,10 +54,10 @@ const TodoItem: React.FC<TodoItemProps> = ({ item, expanded, onPress, isComplete
               <MaterialIcons name="done" size={24} color="white" />
             </TouchableOpacity>
           )}
-          {!isCompleted &&
-            <TouchableOpacity onPress={handleDelete} style={styles.deleteIcon}>
-              <MaterialIcons name="delete" size={24} color="white" />
-            </TouchableOpacity>
+          {!isCompleted && 
+          <TouchableOpacity onPress={handleDelete} style={styles.deleteIcon}>
+            <MaterialIcons name="delete" size={24} color="white" />
+          </TouchableOpacity>
           }
         </View>
       </View>
