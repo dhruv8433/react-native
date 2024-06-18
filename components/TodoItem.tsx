@@ -47,7 +47,7 @@ const TodoItem: React.FC<TodoItemProps> = ({ item, expanded, onPress, isComplete
   };
 
   const handlePress = () => {
-    navigation.navigate('TodoDetail', { id: item.id }); // Corrected navigation parameter
+    navigation.navigate('TodoDetail', { id: item.id, completedTodo : item.completed }); // Corrected navigation parameter
   };
 
   return (

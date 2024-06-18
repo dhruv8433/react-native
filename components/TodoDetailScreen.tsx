@@ -1,22 +1,24 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ImageBackground, Image } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, ImageBackground, Image } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/hooks/reducers'; // Adjust the import path to your root reducer
 import Icon from 'react-native-vector-icons/Ionicons'; // Example icon set, adjust as per your choice
-import { deleteTodo } from '@/hooks/action';
+import { deleteTodo, markAsCompleted } from '@/hooks/action';
 import Toast from 'react-native-toast-message'; // Import react-native-toast-message
 
-
-// Sample background image (replace with your own)
 const backgroundImage = "https://i.pinimg.com/564x/16/f4/2f/16f42f6c6233620989df779a47be92f7.jpg";
 
 const TodoDetailScreen = ({ route, navigation }) => {
-    const { id } = route.params;
-    const todo = useSelector((state: RootState) =>
-        state.todos.find((todo) => todo.id === id)
-    );
-
+    const { id, completedTodo } = route.params;
     const dispatch = useDispatch();
+
+    const todo = useSelector((state: RootState) => {
+        if (completedTodo) {
+            return state.completedTodos.find((todo) => todo.id === id);
+        } else {
+            return state.todos.find((todo) => todo.id === id);
+        }
+    });
 
     if (!todo) {
         return (
@@ -45,21 +47,21 @@ const TodoDetailScreen = ({ route, navigation }) => {
     const handleDelete = async () => {
         try {
             dispatch(deleteTodo(id));
-             await Toast.show({
+            await Toast.show({
                 type: 'success',
-                text1: "Todo deleted success",
+                text1: "Todo deleted successfully",
                 visibilityTime: 3000, // Toast duration
                 autoHide: true,
-            }); navigation.navigate('TodoList'); // Navigate back to TodoList after deletion
+            });
+            navigation.navigate('TodoList'); // Navigate back to TodoList after deletion
         } catch (error) {
             console.error("Error deleting todo:", error);
         }
     };
 
     const handleComplete = () => {
-        // Implement complete/uncomplete logic using Redux action
-        // Example:
-        // dispatch(toggleCompleteAction(id));
+        dispatch(markAsCompleted(id));
+        navigation.navigate('TodoList'); // Navigate back to TodoList after marking as completed
     };
 
     return (
@@ -78,23 +80,23 @@ const TodoDetailScreen = ({ route, navigation }) => {
                     <Text style={styles.completed}>Completed: {completed ? 'Yes' : 'No'}</Text>
 
                     <View style={styles.buttonContainer}>
-                        <TouchableOpacity style={[styles.iconButton, styles.editButton]} onPress={handleEdit}>
+                        {!completed ? <TouchableOpacity style={[styles.iconButton, styles.editButton]} onPress={handleEdit}>
                             <View style={styles.buttonContent}>
                                 <Icon name="create-outline" size={24} color="white" />
                                 <Text style={styles.buttonText}>Edit</Text>
                             </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={[styles.iconButton, styles.deleteButton]} onPress={handleDelete}>
+                        </TouchableOpacity> : null}
+                        {!completed ? <TouchableOpacity style={[styles.iconButton, styles.deleteButton]} onPress={handleDelete}>
                             <View style={styles.buttonContent}>
                                 <Icon name="trash-outline" size={24} color="white" />
                                 <Text style={styles.buttonText}>Delete</Text>
                             </View>
-                        </TouchableOpacity>
+                        </TouchableOpacity> : null}
                         {!completed ? (
                             <TouchableOpacity style={[styles.iconButton, styles.completeButton]} onPress={handleComplete}>
                                 <View style={styles.buttonContent}>
                                     <Icon name="checkmark-outline" size={24} color="white" />
-                                    <Text style={styles.buttonText}>Completed</Text>
+                                    <Text style={styles.buttonText}>Complete</Text>
                                 </View>
                             </TouchableOpacity>
                         ) : null}

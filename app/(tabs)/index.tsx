@@ -1,6 +1,5 @@
-// HomeScreen.tsx
-import React, { useState, useEffect } from 'react';
-import { Image, StyleSheet, Platform, FlatList, View, ScrollView } from 'react-native';
+import React, { useState } from 'react';
+import { Image, StyleSheet, Platform, FlatList, View, ScrollView, ImageBackground } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { useSelector } from 'react-redux';
@@ -10,26 +9,18 @@ import { Divider } from 'react-native-paper';
 
 export default function HomeScreen() {
   const [expandedTodo, setExpandedTodo] = useState<string | null>(null);
-
-  // Detailed logging
-  const todos = useSelector((state: RootState) => {
-    console.log("useSelector state:", state);
-    return state.todos;
-
-  });
-
-  // Logging after extraction
-  useEffect(() => {
-    console.log("Extracted todos:", todos);
-  }, [todos]);
+  const todos = useSelector((state: RootState) => state.todos);
 
   const handlePress = (id: string) => {
     setExpandedTodo(expandedTodo === id ? null : id);
   };
 
+  const backgroundImage = "https://i.pinimg.com/564x/70/3e/98/703e98add960eaf253746d771a98c367.jpg";
+
   return (
-    <ScrollView>
-      <ThemedView style={styles.container}>
+    <ImageBackground source={{ uri: backgroundImage }} style={styles.backgroundImage}>
+      <ScrollView contentContainerStyle={styles.container}>
+        {/* Header section */}
         <ThemedView style={styles.header}>
           <Image source={{ uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSv8a2YftkCyxt7LPQ2I-tc5tQgydVpHWsFPA&s" }} style={styles.logo} />
           <ThemedText type="title" style={styles.title}>
@@ -42,14 +33,17 @@ export default function HomeScreen() {
           <Image source={{ uri: 'https://i.pinimg.com/564x/a7/5f/02/a75f028d910bd6fd07926b011c8dc5b1.jpg' }} style={styles.todosImage} />
         </View>
 
+        {/* Description */}
         <ThemedText style={styles.description}>
           Welcome to My Todos app! This app helps you keep track of your tasks and organize your day efficiently.
         </ThemedText>
 
-        <View style={{ paddingHorizontal: 20 }}>
-          <Divider style={{ borderColor: "#000" }} />
+        {/* Divider */}
+        <View style={styles.dividerContainer}>
+          <Divider style={styles.divider} />
         </View>
 
+        {/* Todo list */}
         <ThemedView style={styles.todoListContainer}>
           <FlatList
             data={todos}
@@ -64,8 +58,8 @@ export default function HomeScreen() {
             )}
           />
         </ThemedView>
-      </ThemedView>
-    </ScrollView>
+      </ScrollView>
+    </ImageBackground>
   );
 }
 
@@ -74,18 +68,25 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: Platform.OS === 'android' ? 25 : 0,
     paddingHorizontal: 16,
-    minHeight: "100vh"
+    backgroundColor: 'transparent', // Make sure background is transparent to show ImageBackground
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
     paddingTop: 40,
+    paddingBottom: 20,
     paddingHorizontal: 16,
+    backgroundColor: "transparent",
+  },
+  backgroundImage: {
+    flex: 1,
+    resizeMode: 'cover', // or 'stretch'
+    justifyContent: 'center',
   },
   logo: {
     width: 30,
     height: 30,
+    marginRight: 8,
   },
   title: {
     fontSize: 28,
@@ -94,7 +95,6 @@ const styles = StyleSheet.create({
   imageContainer: {
     alignItems: 'center',
     marginTop: 20,
-    paddingHorizontal: 15,
   },
   todosImage: {
     width: '100%',
@@ -102,16 +102,22 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
     borderRadius: 10,
   },
-  todoListContainer: {
-    flex: 1,
-    paddingHorizontal: 16,
-    paddingTop: 20,
-  },
   description: {
     fontSize: 16,
     marginTop: 20,
     marginBottom: 20,
     textAlign: 'center',
-    paddingHorizontal: 16,
+  },
+  dividerContainer: {
+    paddingHorizontal: 20,
+  },
+  divider: {
+    borderColor: '#000000', // Color of the divider
+    borderWidth: 1,
+  },
+  todoListContainer: {
+    flex: 1,
+    marginTop: 20,
+    backgroundColor: "transparent",
   },
 });

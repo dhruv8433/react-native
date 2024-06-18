@@ -7,6 +7,7 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { addTodo, updateTodo } from '@/hooks/action';
 import { RootState } from '@/hooks/types';
+import { Picker } from '@react-native-picker/picker';
 
 const EditTodo = ({ route, navigation }) => {
     const { id } = route.params; // Get todo ID from navigation params
@@ -25,6 +26,7 @@ const EditTodo = ({ route, navigation }) => {
         { label: 'Shopping', value: 'shopping' },
         { label: 'Study', value: 'study' },
     ]);
+    const [category, setCategory] = useState<string>(''); // State for selected category
 
     // Fetch todo details if editing existing todo
     useEffect(() => {
@@ -114,20 +116,19 @@ const EditTodo = ({ route, navigation }) => {
                         style={styles.input}
                     />
 
-                    <DropDownPicker
-                        open={tagsOpen}
-                        value={tagsValue}
-                        items={tagsItems}
-                        setOpen={setTagsOpen}
-                        setValue={setTagsValue}
-                        setItems={setTagsItems}
-                        placeholder="Select Tags"
-                        multiple
-                        min={0}
-                        max={tagsItems.length}
-                        style={styles.input}
-                        containerStyle={{ marginTop: 10 }}
-                    />
+<Picker
+              selectedValue={category}
+              style={styles.picker}
+              onValueChange={(itemValue) => setCategory(itemValue)}
+            >
+              <Picker.Item label="Select category" value="" />
+              <Picker.Item label="Design" value="design" />
+              <Picker.Item label="Development" value="development" />
+              <Picker.Item label="Coding" value="coding" />
+              <Picker.Item label="Meeting" value="meeting" />
+              <Picker.Item label="Office Time" value="office time" />
+              <Picker.Item label="User Experience" value="user experience" />
+            </Picker>
 
                     <Button mode="contained" onPress={handleAddOrUpdateTodo} style={styles.button}>
                         {id ? 'Update Todo' : 'Add Todo'}
