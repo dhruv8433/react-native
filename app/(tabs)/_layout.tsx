@@ -1,14 +1,45 @@
 // TabLayout.js
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Tabs } from 'expo-router';
-import { TabBarIcon } from '@/components/navigation/TabBarIcon';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
-import { useSelector, useDispatch } from 'react-redux';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { store, persistor } from '../store'; // Ensure correct path
+
+import { TabBarIcon } from '@/components/navigation/TabBarIcon';
+import { Colors } from '@/constants/Colors';
+import { useColorScheme } from '@/hooks/useColorScheme';
+
+import TabTwoScreen from './TabTwoScreen'; // Ensure correct path
+import HomeScreen from '.';
+import TodoDetailScreen from '@/components/TodoDetailScreen';
+import Completed from './Completed';
+import EditTodo from '@/components/EditTodo';
+
+const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
+
+const TodoStack = () => (
+  <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Screen name="TodoList" component={HomeScreen} />
+    <Stack.Screen name="TodoDetail" component={TodoDetailScreen} />
+    <Stack.Screen name="EditTodo" component={EditTodo} />
+  </Stack.Navigator>
+);
+
+const TabTwoStack = () => (
+  <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Screen name="TabTwoScreen" component={TabTwoScreen} />
+  </Stack.Navigator>
+);
+
+const CompletedStack = () => (
+  <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Screen name="CompletedScreen" component={Completed} />
+  </Stack.Navigator>
+);
+
 
 const TabLayout = () => {
   const colorScheme = useColorScheme();
@@ -16,7 +47,7 @@ const TabLayout = () => {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <Tabs
+        <Tab.Navigator
           screenOptions={{
             tabBarShowLabel: false,
             tabBarActiveTintColor: '#000',
@@ -33,16 +64,18 @@ const TabLayout = () => {
             headerShown: false,
           }}
         >
-          <Tabs.Screen
-            name="index"
+          <Tab.Screen
+            name="TodoStack"
+            component={TodoStack}
             options={{
               tabBarIcon: ({ color, focused }) => (
                 <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} size={32} />
               ),
             }}
           />
-          <Tabs.Screen
-            name="TabTwoScreen"
+          <Tab.Screen
+            name="TabTwoStack"
+            component={TabTwoStack}
             options={{
               tabBarIcon: ({ color, focused }) => (
                 <View style={styles.addButtonContainer}>
@@ -53,15 +86,16 @@ const TabLayout = () => {
               ),
             }}
           />
-          <Tabs.Screen
-            name="Completed"
+          <Tab.Screen
+            name="CompletedStack"
+            component={CompletedStack}
             options={{
               tabBarIcon: ({ color, focused }) => (
                 <TabBarIcon name={focused ? 'checkmark-circle' : 'checkmark-circle-outline'} color={color} size={32} />
               ),
             }}
           />
-        </Tabs>
+        </Tab.Navigator>
       </PersistGate>
     </Provider>
   );
@@ -87,7 +121,7 @@ const styles = StyleSheet.create({
     borderRadius: 35,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'purple'
+    backgroundColor: 'purple',
   },
 });
 
