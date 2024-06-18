@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useDispatch } from 'react-redux';
 import { markAsCompleted, deleteTodo } from '@/hooks/action';
+import { useNavigation } from '@react-navigation/native';
 import { Todo } from '@/hooks/types';
 
 type TodoItemProps = {
@@ -16,18 +17,19 @@ const colors: string[] = ['#FFCDD2', '#E1BEE7', '#C5CAE9', '#B3E5FC', '#C8E6C9',
 
 const TodoItem: React.FC<TodoItemProps> = ({ item, expanded, onPress, isCompleted }) => {
   const dispatch = useDispatch();
+  const navigation = useNavigation();
 
   const handleMoveToCompleted = () => {
     console.log('Move to completed:', item.id);
     dispatch(markAsCompleted(item.id));
     if (!isCompleted) {
-      dispatch(deleteTodo(item.id)); 
+      dispatch(deleteTodo(item.id));
     }
   };
 
   const handleDelete = () => {
     console.log('Delete todo:', item.id);
-    dispatch(deleteTodo(item.id.toString())); // Ensure id is converted to string
+    dispatch(deleteTodo(item.id.toString()));
   };
 
   if (!item) {
@@ -36,15 +38,27 @@ const TodoItem: React.FC<TodoItemProps> = ({ item, expanded, onPress, isComplete
 
   const { text, description, date } = item;
 
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
+
+  const handlePress = () => {
+    navigation.navigate('TodoDetail', { id: item.id }); // Corrected navigation parameter
+  };
+
   return (
-    <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity onPress={handlePress}>
       <View style={[styles.todoItem, { backgroundColor: colors[Math.floor(Math.random() * colors.length)], borderLeftWidth: 4 }]}>
         <View style={{ flex: 1 }}>
           <Text style={styles.todoText}>{text}</Text>
           {expanded && (
             <>
               <Text style={styles.todoDescription}>{description}</Text>
-              <Text style={styles.todoDescription}>Date: {date}</Text>
+              <Text style={styles.todoDescription}>Date: {formatDate(date)}</Text>
             </>
           )}
         </View>
@@ -54,11 +68,11 @@ const TodoItem: React.FC<TodoItemProps> = ({ item, expanded, onPress, isComplete
               <MaterialIcons name="done" size={24} color="white" />
             </TouchableOpacity>
           )}
-          {!isCompleted && 
-          <TouchableOpacity onPress={handleDelete} style={styles.deleteIcon}>
-            <MaterialIcons name="delete" size={24} color="white" />
-          </TouchableOpacity>
-          }
+          {!isCompleted && (
+            <TouchableOpacity onPress={handleDelete} style={styles.deleteIcon}>
+              <MaterialIcons name="delete" size={24} color="white" />
+            </TouchableOpacity>
+          )}
         </View>
       </View>
     </TouchableOpacity>

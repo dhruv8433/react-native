@@ -1,6 +1,6 @@
 // TabTwoScreen.tsx
 import React, { useState } from 'react';
-import { StyleSheet, View, Platform, Image } from 'react-native';
+import { StyleSheet, View, Platform, Image, ScrollView } from 'react-native';
 import { TextInput, Button, Divider } from 'react-native-paper';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { useDispatch } from 'react-redux';
@@ -55,62 +55,64 @@ const TabTwoScreen = () => {
   };
 
   return (
-    <ThemedView style={styles.container}>
-      <ThemedView style={styles.header}>
-        <Image source={{ uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSv8a2YftkCyxt7LPQ2I-tc5tQgydVpHWsFPA&s" }} style={styles.logo} />
-        <ThemedText type="title" style={styles.title}>Add Todo</ThemedText>
+    <ScrollView>
+      <ThemedView style={styles.container}>
+        <ThemedView style={styles.header}>
+          <Image source={{ uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSv8a2YftkCyxt7LPQ2I-tc5tQgydVpHWsFPA&s" }} style={styles.logo} />
+          <ThemedText type="title" style={styles.title}>Add Todo</ThemedText>
+        </ThemedView>
+
+        {/* Beautiful image of todos */}
+        <View style={styles.imageContainer}>
+          <Image source={{ uri: 'https://i.pinimg.com/564x/15/3a/06/153a0665b1a65e59cef51bb81b0ee662.jpg' }} style={styles.todosImage} />
+        </View>
+
+        <ThemedText style={styles.description}>
+          Add your todos by simply filling out the form below. You can also add tags to categorize your todos.
+        </ThemedText>
+
+        <View style={{ paddingHorizontal: 20 }}>
+          <Divider style={{ borderColor: "#000" }} />
+        </View>
+
+        <View style={styles.formContainer}>
+          <TextInput
+            label="Todo Text"
+            value={newTodoText}
+            onChangeText={(text) => setNewTodoText(text)}
+            style={styles.input}
+          />
+
+          <TextInput
+            label="Description"
+            value={newTodoDescription}
+            onChangeText={(text) => setNewTodoDescription(text)}
+            multiline
+            numberOfLines={4}
+            style={styles.input}
+          />
+
+          <DropDownPicker
+            open={tagsOpen}
+            value={tagsValue}
+            items={tagsItems}
+            setOpen={setTagsOpen}
+            setValue={setTagsValue}
+            setItems={setTagsItems}
+            placeholder="Select Tags"
+            multiple
+            min={0}
+            max={tagsItems.length}
+            style={styles.input}
+            containerStyle={{ marginTop: 10 }}
+          />
+
+          <Button mode="contained" onPress={handleAddTodo} style={styles.button}>
+            Add Todo
+          </Button>
+        </View>
       </ThemedView>
-
-      {/* Beautiful image of todos */}
-      <View style={styles.imageContainer}>
-        <Image source={{ uri: 'https://i.pinimg.com/564x/15/3a/06/153a0665b1a65e59cef51bb81b0ee662.jpg' }} style={styles.todosImage} />
-      </View>
-
-      <ThemedText style={styles.description}>
-        Add your todos by simply filling out the form below. You can also add tags to categorize your todos.
-      </ThemedText>
-
-      <View style={{ paddingHorizontal: 20 }}>
-        <Divider style={{ borderColor: "#000" }} />
-      </View>
-
-      <View style={styles.formContainer}>
-        <TextInput
-          label="Todo Text"
-          value={newTodoText}
-          onChangeText={(text) => setNewTodoText(text)}
-          style={styles.input}
-        />
-
-        <TextInput
-          label="Description"
-          value={newTodoDescription}
-          onChangeText={(text) => setNewTodoDescription(text)}
-          multiline
-          numberOfLines={4}
-          style={styles.input}
-        />
-
-        <DropDownPicker
-          open={tagsOpen}
-          value={tagsValue}
-          items={tagsItems}
-          setOpen={setTagsOpen}
-          setValue={setTagsValue}
-          setItems={setTagsItems}
-          placeholder="Select Tags"
-          multiple
-          min={0}
-          max={tagsItems.length}
-          style={styles.input}
-          containerStyle={{ marginTop: 10 }}
-        />
-
-        <Button mode="contained" onPress={handleAddTodo} style={styles.button}>
-          Add Todo
-        </Button>
-      </View>
-    </ThemedView>
+    </ScrollView>
   );
 };
 
@@ -119,6 +121,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: Platform.OS === 'android' ? 25 : 0,
     paddingHorizontal: 16,
+     minHeight: "100vh"
   },
   header: {
     flexDirection: 'row',
