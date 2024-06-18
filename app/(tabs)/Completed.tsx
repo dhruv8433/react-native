@@ -3,7 +3,7 @@ import { ThemedView } from "@/components/ThemedView";
 import TodoItem from "@/components/TodoItem";
 import { RootState } from "@/hooks/types";
 import { useState } from "react";
-import { FlatList, Image, Platform, StyleSheet, View } from "react-native";
+import { FlatList, Image, Platform, ScrollView, StyleSheet, View } from "react-native";
 import { Divider } from "react-native-paper";
 import { useSelector } from "react-redux";
 
@@ -19,44 +19,51 @@ export default function Completed() {
 
     console.log("completed", completedTodos)
     return (
-        <ThemedView style={styles.container}>
-            <ThemedView style={styles.header}>
-                <Image source={{ uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSv8a2YftkCyxt7LPQ2I-tc5tQgydVpHWsFPA&s" }} style={styles.logo} />
-                <ThemedText type="title" style={styles.title}>
-                    Completed
-                </ThemedText>
-            </ThemedView>
-
-            {/* Beautiful image of todos */}
-            <View style={styles.imageContainer}>
-                <Image source={{ uri: 'https://i.pinimg.com/564x/ee/2d/b4/ee2db4e6b1b3ca277bc96f2e1b20367a.jpg' }} style={styles.todosImage} />
-            </View>
-
-            <ThemedText style={styles.description}>
-                Your completed tasks are listed below. Keep up the good work! 🚀
-            </ThemedText>
-
-            <View style={{ paddingHorizontal: 20 }}>
-                <Divider style={{ borderColor: "#000" }} />
-            </View>
-
-            <View style={styles.formContainer}>
-                <ThemedView style={styles.todoListContainer}>
-                    <FlatList
-                        data={completedTodos}
-                        keyExtractor={item => item.id}
-                        renderItem={({ item }) => (
-                            <TodoItem
-                                item={item}
-                                expanded={expandedTodo === item.id}
-                                onPress={() => handlePress(item.id)}
-                                isCompleted={true}
-                            />
-                        )}
-                    />
+        <ScrollView>
+            <ThemedView style={styles.container}>
+                <ThemedView style={styles.header}>
+                    <Image source={{ uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSv8a2YftkCyxt7LPQ2I-tc5tQgydVpHWsFPA&s" }} style={styles.logo} />
+                    <ThemedText type="title" style={styles.title}>
+                        Completed
+                    </ThemedText>
                 </ThemedView>
-            </View>
-        </ThemedView>
+
+                {/* Beautiful image of todos */}
+                <View style={styles.imageContainer}>
+                    <Image source={{ uri: 'https://i.pinimg.com/564x/ee/2d/b4/ee2db4e6b1b3ca277bc96f2e1b20367a.jpg' }} style={styles.todosImage} />
+                </View>
+
+                <ThemedText style={styles.description}>
+                    Your completed tasks are listed below. Keep up the good work! 🚀
+                </ThemedText>
+
+                <View style={{ paddingHorizontal: 20 }}>
+                    <Divider style={{ borderColor: "#000" }} />
+                </View>
+
+                <View style={styles.formContainer}>
+                    <ThemedView style={styles.todoListContainer}>
+                        {
+                            completedTodos.length === 0 && (
+                                <ThemedText>No completed tasks yet.</ThemedText>
+                            )
+                        }
+                        <FlatList
+                            data={completedTodos}
+                            keyExtractor={item => item.id}
+                            renderItem={({ item }) => (
+                                <TodoItem
+                                    item={item}
+                                    expanded={expandedTodo === item.id}
+                                    onPress={() => handlePress(item.id)}
+                                    isCompleted={true}
+                                />
+                            )}
+                        />
+                    </ThemedView>
+                </View>
+            </ThemedView>
+        </ScrollView>
     )
 }
 
@@ -65,6 +72,7 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingTop: 25,
         paddingHorizontal: 16,
+        minHeight: "100vh"
     },
     formContainer: {
         flex: 1,
