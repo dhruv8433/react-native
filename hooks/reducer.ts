@@ -1,5 +1,5 @@
 // todoReducer.js
-import { ADD_TODO, DELETE_TODO, MARK_AS_COMPLETED } from './types';
+import { ADD_TODO, DELETE_TODO, MARK_AS_COMPLETED, UPDATE_TODO } from './types';
 import { REHYDRATE } from 'redux-persist';
 
 const initialState = {
@@ -34,6 +34,12 @@ const todoReducer = (state = initialState, action) => {
         ...state,
         todos: state.todos.filter(todo => todo.id !== todoId),
         completedTodos: [...state.completedTodos, updatedTodo],
+      };
+
+    case UPDATE_TODO:
+      return {
+        ...state,
+        todos: state.todos.map((todo) => (todo.id === action.payload.id ? action.payload : todo)),
       };
     case REHYDRATE:
       if (action.payload) {
