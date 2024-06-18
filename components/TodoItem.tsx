@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { markAsCompleted, deleteTodo } from '@/hooks/action';
 import { useNavigation } from '@react-navigation/native';
 import { Todo } from '@/hooks/types';
+import Toast from 'react-native-toast-message';
 
 type TodoItemProps = {
   item: Todo;
@@ -24,13 +25,27 @@ const TodoItem: React.FC<TodoItemProps> = ({ item, expanded, onPress, isComplete
     dispatch(markAsCompleted(item.id));
     if (!isCompleted) {
       dispatch(deleteTodo(item.id));
+      Toast.show({
+        type: 'success',
+        text1: 'Todo completed',
+        visibilityTime: 3000,
+        autoHide: true,
+
+      })
     }
   };
 
   const handleDelete = () => {
     console.log('Delete todo:', item.id);
     dispatch(deleteTodo(item.id.toString()));
+    Toast.show({
+      type: 'success',
+      text1: 'Todo Deleted Success',
+      visibilityTime: 3000,
+      autoHide: true,
+    })
   };
+
 
   if (!item) {
     return null;
@@ -47,7 +62,7 @@ const TodoItem: React.FC<TodoItemProps> = ({ item, expanded, onPress, isComplete
   };
 
   const handlePress = () => {
-    navigation.navigate('TodoDetail', { id: item.id, completedTodo : item.completed }); // Corrected navigation parameter
+    navigation.navigate('TodoDetail', { id: item.id, completedTodo: item.completed }); // Corrected navigation parameter
   };
 
   return (

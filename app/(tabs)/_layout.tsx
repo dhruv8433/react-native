@@ -16,6 +16,7 @@ import HomeScreen from '.';
 import TodoDetailScreen from '@/components/TodoDetailScreen';
 import Completed from './Completed';
 import EditTodo from '@/components/EditTodo';
+import Toast from 'react-native-toast-message';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -97,6 +98,7 @@ const TabLayout = () => {
           />
         </Tab.Navigator>
       </PersistGate>
+      <Toast ref={(ref) => Toast.setRef(ref)} />
     </Provider>
   );
 };

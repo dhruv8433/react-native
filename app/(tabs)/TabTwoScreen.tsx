@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { addTodo } from '@/hooks/action';
+import Toast from 'react-native-toast-message';
 
 type Todo = {
   id: string;
@@ -42,19 +43,16 @@ const TabTwoScreen = () => {
     };
 
     dispatch(addTodo(newTodo));
-    showAlert();
+    Toast.show({
+      type: 'success',
+      text1: 'Todo added successfully',
+      visibilityTime: 3000,
+      autoHide: true,
+    })
     setNewTodoText('');
     setNewTodoDescription('');
     setSelectedTags([]);
     setCategory(''); // Reset category
-  };
-
-  const showAlert = () => {
-    Alert.alert(
-      'Task Saved',
-      'Your task has been saved successfully!',
-      [{ text: 'OK', onPress: () => console.log('OK Pressed') }]
-    );
   };
 
   const backgroundImage = "https://i.pinimg.com/564x/0d/46/5c/0d465c78df992a5acf02577d8892b9ff.jpg";
@@ -137,6 +135,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: 40,
     paddingHorizontal: 16,
+    backgroundColor: "transparent",
+
   },
   logo: {
     width: 30,
@@ -145,6 +145,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: 'bold',
+    backgroundColor: "transparent",
   },
   imageContainer: {
     alignItems: 'center',
