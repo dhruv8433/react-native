@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import Svg, { Circle } from 'react-native-svg';
 
 const HomeScreen: React.FC = () => {
   const [isRunning, setIsRunning] = useState<boolean>(false);
   const [time, setTime] = useState<number>(0);
+  const [laps, setLaps] = useState<number[]>([]);
 
   useEffect(() => {
     let interval: NodeJS.Timeout | undefined;
     if (isRunning) {
       interval = setInterval(() => {
-        setTime(prevTime => prevTime + 1);
-      }, 1000);
+        setTime(prevTime => prevTime + 100);
+      }, 1);
     } else if (!isRunning && time !== 0) {
       clearInterval(interval);
     }
@@ -21,24 +22,29 @@ const HomeScreen: React.FC = () => {
   }, [isRunning]);
 
   const handleStartStop = () => {
+    if (isRunning) {
+      setLaps([...laps, time]);
+    }
     setIsRunning(!isRunning);
   };
 
   const handleReset = () => {
     setIsRunning(false);
     setTime(0);
+    setLaps([]);
   };
 
   const formatTime = (time: number) => {
-    const getSeconds = `0${time % 60}`.slice(-2);
-    const minutes = Math.floor(time / 60);
+    const milliseconds = `00${time % 1000}`.slice(-3);
+    const seconds = Math.floor(time / 1000);
+    const getSeconds = `0${seconds % 60}`.slice(-2);
+    const minutes = Math.floor(seconds / 60);
     const getMinutes = `0${minutes % 60}`.slice(-2);
-    const getHours = `0${Math.floor(time / 3600)}`.slice(-2);
-    return `${getHours} : ${getMinutes} : ${getSeconds}`;
+    return `${getMinutes}:${getSeconds}.${milliseconds}`;
   };
 
   // Calculate the strokeDashoffset for the progress circle
-  const progress = time % 60;
+  const progress = (time / 1000) % 60;
   const circumference = 2 * Math.PI * 140; // 140 is the radius of the circle
   const strokeDashoffset = circumference - (progress / 60) * circumference;
 
@@ -76,6 +82,14 @@ const HomeScreen: React.FC = () => {
           <Text style={styles.buttonText}>Reset</Text>
         </TouchableOpacity>
       </View>
+      <ScrollView style={styles.lapsContainer}>
+        {laps.map((lap, index) => (
+          <View key={index} style={styles.lap}>
+            <Text style={styles.lapText}>Lap {index + 1}</Text>
+            <Text style={styles.lapText}>{formatTime(lap)}</Text>
+          </View>
+        ))}
+      </ScrollView>
     </View>
   );
 };
@@ -93,6 +107,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 40,
     color: '#880e4f',
+    marginTop: 50
   },
   timeContainer: {
     justifyContent: 'center',
@@ -122,6 +137,21 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 18,
     fontWeight: 'bold',
+  },
+  lapsContainer: {
+    width: '80%',
+    marginTop: 20,
+  },
+  lap: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    borderBottomColor: '#880e4f',
+    borderBottomWidth: 1,
+    paddingVertical: 10,
+  },
+  lapText: {
+    fontSize: 18,
+    color: '#880e4f',
   },
 });
 
