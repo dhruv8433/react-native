@@ -39,23 +39,29 @@ To run this application locally, follow these steps:
 
 ## screenshorts and demo
 
-https://github.com/dhruv8433/Prasunet_AD_02/assets/114583978/db530622-2f0f-4cad-bce3-829cfb10dc77
+## Demo Videom
+
+https://github.com/dhruv8433/Prasunet_AD_02/assets/114583978/69b57c0a-3f40-464d-ac1b-5c6e706ffdde
 
 1. Home Screen
 
-![image](https://github.com/dhruv8433/Prasunet_AD_02/assets/114583978/91cb1853-40cb-4f50-ba1d-27e1f06598f6)
+![image](https://github.com/dhruv8433/Prasunet_AD_02/assets/114583978/f7a9a649-80aa-44d5-bd2b-93c7f58e9a96)
 
 2. Add todo
 
-![image](https://github.com/dhruv8433/Prasunet_AD_02/assets/114583978/4fb16da1-a68a-40a1-ae95-df3a2ad2f687)
+![image](https://github.com/dhruv8433/Prasunet_AD_02/assets/114583978/3752f953-530b-4626-8134-977b3f78d1c6)
 
 3. completed
 
-![image](https://github.com/dhruv8433/Prasunet_AD_02/assets/114583978/90b283eb-a6aa-41ad-b949-a50c3c381bab)
+![image](https://github.com/dhruv8433/Prasunet_AD_02/assets/114583978/d804b105-17cc-4ca5-936d-ad73e3544acf)
 
 4. Detailed todo with description
 
-![image](https://github.com/dhruv8433/Prasunet_AD_02/assets/114583978/b7989ad6-5509-4beb-a8ab-1d1c926f0a91)
+![image](https://github.com/dhruv8433/Prasunet_AD_02/assets/114583978/17d8ccc5-86ab-43bb-ae45-8a7e5301fd9c)
+
+5. Update Todo
+
+![image](https://github.com/dhruv8433/Prasunet_AD_02/assets/114583978/c3a84dd2-9123-4b96-95f1-fe7d5c132045)
 
 
 
