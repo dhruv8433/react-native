@@ -7,6 +7,7 @@ Welcome to My Todo App! This is a simple web application where you can manage yo
 - **Add Todo**: Easily add new tasks to your list.
 - **Mark as Completed**: Check off todos as you finish them.
 - **Delete Todo**: Remove tasks you no longer need.
+- **Update Todo** : Update todo by click on edit button in detailed screen.
 - **Responsive Design**: Works seamlessly on desktop and mobile.
 
 ## Technologies Used
@@ -36,6 +37,7 @@ To run this application locally, follow these steps:
 - Add a Todo: Enter a task in the input field and press Enter or click the "Add" button.
 - Mark as Completed: Click on the checkbox next to a todo to mark it as completed.
 - Delete a Todo: Click on the delete icon (trash bin) to remove a todo from the list.
+- Update Todo:  Update todo by click on edit button in detailed screen.
 
 ## screenshorts and demo
 
