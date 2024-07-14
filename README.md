@@ -32,7 +32,7 @@ This is a simple QR code scanner application built using React Native and Expo. 
    yarn start
    ```
 
-4. Usage
+## Usage
 
 Run the application:
 
