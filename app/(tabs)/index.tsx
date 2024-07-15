@@ -8,6 +8,7 @@ const initialBoardState = [
   ['', '', '']
 ];
 
+// home screen
 const HomeScreen = () => {
   const [board, setBoard] = useState(initialBoardState);
   const [currentPlayer, setCurrentPlayer] = useState('X');
