@@ -1,50 +1,65 @@
-# Welcome to your Expo app 👋
+# Tic Tac Toe - React Native
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+This is a simple Tic Tac Toe game built using React Native. The game allows two players to take turns marking the spaces in a 3×3 grid with X and O. The player who succeeds in placing three of their marks in a horizontal, vertical, or diagonal row wins the game.
 
-## Get started
+## Features
 
-1. Install dependencies
+- Two-player mode
+- Vs PC [single player]
+- Interactive UI with React Native components
+- Responsive design for both Android and iOS
+- Simple and easy-to-understand codebase
 
-   ```bash
-   npm install
-   ```
+## Screenshots | Video
 
-2. Start the app
+[TicTacToe.webm](https://github.com/user-attachments/assets/9b3c6f05-9025-4a2f-b06f-ccde43c7b4f8)
 
-   ```bash
-    npx expo start
-   ```
+## Installation
 
-In the output, you'll find options to open the app in a
+To get started with the project, follow these steps:
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+1. **Clone the repository:**
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+    ```sh
+    git clone https://github.com/dhruv8433/Prasunet_AD_04.git
+    cd Prasunet_AD_04
+    ```
 
-## Get a fresh project
+2. **Install dependencies:**
 
-When you're ready, run:
+    ```sh
+    npm install
+    ```
 
-```bash
-npm run reset-project
-```
+3. **Run the app:**
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+    - For Android:
+        ```sh
+        npm run android
+        ```
+    - For iOS:
+        ```sh
+        npm run ios
+        ```
 
-## Learn more
+## Usage
 
-To learn more about developing your project with Expo, look at the following resources:
+1. The game starts with an empty 3x3 grid.
+2. Players take turns tapping on an empty cell to place their mark (X or O).
+3. The game checks for a win or a draw after each move.
+4. The game highlights the winning combination and displays a winning message if a player wins.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
 
-## Join the community
+## Contributing
 
-Join our community of developers creating universal apps.
+If you would like to contribute to the project, please fork the repository and submit a pull request. For major changes, please open an issue first to discuss what you would like to change.
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## Acknowledgements
+
+- This project was developed using [React Native](https://reactnative.dev/).
+- Special thanks to the open-source community for providing valuable resources and libraries.
+
+## Contact
+
+If you have any questions or feedback, feel free to contact me.
+
